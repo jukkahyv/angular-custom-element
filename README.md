@@ -1,27 +1,43 @@
-# CustomElement
+# Angular custom element with tests
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
+I was struggling to get [Angular custom elements](https://angular.io/guide/elements) working in unit tests. Here is minimal (?) application that works.
 
-## Development server
+All the relevant code is in `my-custom-element.component.spec.ts`:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This registers the custom component. Note that checking previous registration is needed, otherwise running multiple tests fails.
+```typescript
+    const injector = TestBed.inject(Injector);
+    const MyCustomElement = createCustomElement(MyCustomElementComponent, {injector});
+    if (!customElements.get('my-custom-element')) customElements.define('my-custom-element', MyCustomElement);
+```
 
-## Code scaffolding
+First I tried creating element with `document.createElement` and checking content. It does not work.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```typescript
+    const customElem = document.createElement('my-custom-element');
+    expect(customElem.innerHTML).not.toBe('');
+    expect(customElem.innerText).toBe('my-custom-element works!');
+```
 
-## Build
+What was needed, we need to have a wrapper "host" Angular element, even if we're rendering the component using `document.createElement`.
+```typescript
+    const fixture = TestBed.createComponent(MyCustomElementHostComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    const customElem = document.createElement('my-custom-element');
+
+    // THIS MAKES IT WORK
+    component.element.nativeElement.appendChild(customElem);
+    fixture.detectChanges();
+
+    expect(customElem.innerHTML).not.toBe('');
+    expect(customElem.innerText).toBe('my-custom-element works!');
+```
+
+Disclaimer: I'm very novice with Angular (more of a React guy). I couldn't find any examples with unit tests. Hopefully this helps someone!
 
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

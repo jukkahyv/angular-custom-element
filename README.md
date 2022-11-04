@@ -1,6 +1,6 @@
-# Angular custom element with tests
+# Angular custom element (Web Component) with unit tests
 
-I was struggling to get [Angular custom elements](https://angular.io/guide/elements) working in unit tests. Here is minimal (?) application that works.
+I was struggling to get [Angular custom elements](https://angular.io/guide/elements) working in unit tests. For some reason, Angular team didn't include any tests (that I can see) in their tutorial. Here is minimal (?) application that works.
 
 ## Why would you do this?
 

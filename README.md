@@ -2,6 +2,12 @@
 
 I was struggling to get [Angular custom elements](https://angular.io/guide/elements) working in unit tests. Here is minimal (?) application that works.
 
+# Why would you do this?
+
+Sometimes it's necessary to render HTML (as string or elements) outside of Angular, while still using some sort of templating. For example, in my case, popups. If the rest of the application is already using Angular, it makes sense to use Angular for this, too. Alternatively, you could use lightweight template processing such as [handlebars](https://handlebarsjs.com/).
+
+# Explanation of solution
+
 All the relevant code is in `my-custom-element.component.spec.ts`:
 
 This registers the custom component. Note that checking previous registration is needed, otherwise running multiple tests fails.

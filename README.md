@@ -35,6 +35,8 @@ What was needed, we need to have a wrapper "host" Angular element, even if we're
     expect(customElem.innerText).toBe('my-custom-element works!');
 ```
 
+This solution is still not ideal, because it requires creating that "dummy" Angular component.
+
 Disclaimer: I'm very novice with Angular (more of a React guy). I couldn't find any examples with unit tests. Hopefully this helps someone!
 
 ## Running unit tests

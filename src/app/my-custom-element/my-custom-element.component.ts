@@ -10,8 +10,8 @@ export class MyCustomElementComponent implements OnInit {
 
   public static tryRegister(injector: Injector) {
     // From https://angular.io/guide/elements
-    const PopupElement = createCustomElement(MyCustomElementComponent, {injector});
-    if (!customElements.get('my-custom-element')) customElements.define('my-custom-element', PopupElement);
+    const MyCustomElement = createCustomElement(MyCustomElementComponent, {injector});
+    if (!customElements.get('my-custom-element')) customElements.define('my-custom-element', MyCustomElement);
 
   }
 

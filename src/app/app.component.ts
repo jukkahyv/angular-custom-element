@@ -12,9 +12,6 @@ export class AppComponent {
   title = 'custom-element';
 
   constructor(injector: Injector, element: ElementRef<HTMLElement>) {
-    // From https://angular.io/guide/elements
-    const PopupElement = createCustomElement(MyCustomElementComponent, {injector});
-    if (!customElements.get('my-custom-element')) customElements.define('my-custom-element', PopupElement);
   }
 
 }
